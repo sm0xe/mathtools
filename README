@@ -1,0 +1,36 @@
+     _
+   _|_  _  _    __ _|_
+    |  |  | |  |    |
+    |  |  |_|_ |__  |_
+   ____________________
+           _
+          / |
+            |
+            |
+
+   Fract is a simple C program that converts improper fractions into proper fractions and simplifies them.
+
+EXAMPLE
+-------
+
+   123          3          1
+   ---  -->  10 -  -->  10 -
+   12          12          4
+
+INSTALLATION
+------------
+
+1. ./autogen.sh
+2. ./configure
+3. make
+4. make install
+
+or
+
+1. ./autogen.sh && ./configure && make && make install
+
+CONTACT
+-------
+
+Karl August Hoivik
+gussefant@gmail.com
