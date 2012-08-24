@@ -1,21 +1,14 @@
-     _
-   _|_  _  _    __ _|_
-    |  |  | |  |    |
-    |  |  |_|_ |__  |_
-   ____________________
-           _
-          / |
-            |
-            |
 
-   Fract is a simple C program that converts improper fractions into proper fractions and simplifies them.
+     _ _   _  _|_ |_     _|_  _   _  |  _
+    | | | | |  |  | | _|_ |  | | | | | |_
+    | | | |_|_ |_ | |  |  |_ |_| |_| |  _|
+   _______________________________________
+                      _
+                     / |
+            	       |
+            	       |
 
-EXAMPLE
--------
-
-   123          3          1
-   ---  -->  10 -  -->  10 -
-   12          12          4
+   Mathtools is a collection of utilities for dealing with fractions, factorization, etc.
 
 INSTALLATION
 ------------
