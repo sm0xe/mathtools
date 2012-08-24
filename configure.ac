@@ -15,7 +15,7 @@ AC_PROG_CC
 # Checks for header files.
 AC_CHECK_HEADERS([stdlib.h])
 AC_CHECK_HEADERS([stdio.h])
-AC_CHECK_HEADERS([getopts.h])
+AC_CHECK_HEADERS([getopt.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 
