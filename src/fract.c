@@ -2,9 +2,9 @@
 #include <stdlib.h>
 void print_fraction(int whole, int nom, int denom){
 	if(whole == 0){ //if there is no whole number
-		printf("\n%d\n", nom);  //
+		printf("%d\n", nom);  //
 		printf("-\n");          //print the fraction
-		printf("%d\n\n", denom);//<
+		printf("%d\n", denom);//<
 	}
 	else if((nom == 0)||(denom == 0)){//if the fraction is only a whole number
 		printf("\n");       //

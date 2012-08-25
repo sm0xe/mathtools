@@ -21,7 +21,9 @@ void print_usage(FILE* stream, int exit_code){
 //above is borrowed and modified code from the book Advanced Linux Programming http://www.advancedlinuxprogramming.com/
 
 int main(int argc, char* argv[]){
-	int next_option, x, y, delim;
+	int next_option;
+	int x, y;
+	char delim;
 	//* below is borrowed and modified code from the book Advanced Linux Programming http://www.advancedlinuxprogramming.com/
 	const char* const short_options = "hf:F:"; //option flags the program can take
 

@@ -16,6 +16,7 @@ AC_PROG_CC
 AC_CHECK_HEADERS([stdlib.h])
 AC_CHECK_HEADERS([stdio.h])
 AC_CHECK_HEADERS([getopt.h])
+AC_CHECK_HEADERS([pthread.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 
