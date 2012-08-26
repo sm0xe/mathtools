@@ -1,1 +1,1 @@
-autoreconf --install || exit 1
+autoreconf --install
