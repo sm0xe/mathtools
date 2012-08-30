@@ -1,11 +1,11 @@
-//#include "config.h"
+#include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
-//#ifdef HAVE_PTHREAD_H
+#ifdef HAVE_PTHREAD_H
 #include <pthread.h>
-//#endif
+#endif
 void* prime_find(void* arg){
-	int num = *((int*) arg); //The number we have to divide.
+	long int num = *((int*) arg); //The number we have to divide.
 	int prime; //The prime we will eventually find.
 	/*A shitload of primes to check.*/
 	int primes[num];
@@ -32,7 +32,7 @@ void addSpaces(int num){
 	spaces[5-digits] = '\0'; //Terminate the string.
 	printf("%s", spaces);
 }
-void factor(int num){
+void factor(long int num){
 	long int number = num; //The number to be factored.
 	pthread_t thread; //The thread we use to find the prime.
 	int prime;

@@ -1,7 +1,7 @@
-//#include "config.h"
-//#ifdef HAVE_GETOPT_H
+#include "config.h"
+#ifdef HAVE_GETOPT_H
 #include <getopt.h>
-//#endif
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 //Below is borrowed and modified code from the book Advanced Linux Programming http://www.advancedlinuxprogramming.com/.
