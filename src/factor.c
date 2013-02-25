@@ -7,17 +7,16 @@
 void* prime_find(void* arg){
 	long int num = *((int*) arg); //The number we have to divide.
 	int prime; //The prime we will eventually find.
-	/*A shitload of primes to check.*/
 	int primes[num];
-	int primcount=0;
+	int primecount=0;
 	prime_sieve(num, 0, primes);
-	while(primes[primcount] != 0){
-		if((num % primes[primcount])==0) //Try to divide the number by the largest prime.
+	while(primes[primecount] != 0){
+		if((num % primes[primecount])==0) //Try to divide the number by the largest prime.
 		{
-			prime = primes[primcount];//
+			prime = primes[primecount];//
 			return (void*) prime;     //If it works, we return the prime.
 		}
-		primcount++; //If not, check the next prime in the array.
+		primecount++; //If not, check the next prime in the array.
 	}
 	return NULL;
 }
