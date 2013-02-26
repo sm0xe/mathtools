@@ -53,7 +53,7 @@ int main(int argc, char* argv[]){
 				factor(x);
 			case 'p':
 				sscanf(optarg, "%d", &x);
-				prime_sieve(x, 1, NULL);
+				prime_sieve(x);
 				exit(0);
 			case '?': //Oops, someone entered an invalid option.
 				print_usage(stderr, 1);

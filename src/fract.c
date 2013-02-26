@@ -7,9 +7,7 @@ void print_fraction(int whole, int nom, int denom){
 		printf("%d\n", denom);//
 	}
 	else if((nom == 0)||(denom == 0)){//If the fraction is only a whole number.
-		printf("\n");       //
-		printf("%d", whole);//Print it.
-		printf("\n\n");     //
+		printf("%d\n", whole);//Print it.
 	}
 	else{//If the fraction contains both a whole number and a remainder.
 		char spaces[6] = "     "; //Initializes a character string with spaces.
