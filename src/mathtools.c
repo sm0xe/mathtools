@@ -17,7 +17,7 @@ void print_usage(FILE* stream, int exit_code){
 			"\nExamples:\n"
 			"	%s -f 4/12			Simplifies the fraction 4/12\n"
 			"	%s -F 123			Factorizes the number 123\n"
-			"	%s -p 123			Prints all primes less than or equal to 12\n", prog_name, prog_name, prog_name);
+			"	%s -p 123			Prints all primes less than or equal to 123\n", prog_name, prog_name, prog_name);
 	exit(exit_code);
 }
 //Above is borrowed and modified code from the book Advanced Linux Programming http://www.advancedlinuxprogramming.com/.
