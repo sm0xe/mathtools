@@ -7,12 +7,18 @@
 #include <pthread.h>
 #endif
 int* primes; //An array for the primes we will use to factor the number.
+void* prime_sieve_wrapper(void* arg){
+	long int num = *((int*) arg);
+	prime_sieve(num, primes); //Fill the array with primes.
+	return NULL;
+}
 void* prime_find(void* arg){
 	long int num = *((int*) arg); //The number we have to divide.
 	long int prime; //The prime we will eventually find.
 	int primecount=0;
-	while(primes[primecount] != 0){
-		if((num % primes[primecount])==0){ //Try to divide the number by the smallest prime.
+	while(1){
+		if(primes[primecount] == 0) continue; //If there is no prime number to check, check again.
+		if(num % primes[primecount]==0){ //Try to divide the number by the smallest prime.
 			prime = primes[primecount];//
 			return (void*) prime;     //If it works, we return the prime.
 		}
@@ -37,10 +43,11 @@ void addSpaces(int num, long int orig_num){
 }
 void factor(long int num){
 	long int orig_num = num; //Store the original number for later usage.
+	pthread_t siever; //The thread we use to fill the array with primes.
 	pthread_t finder; //The thread we use to find the prime.
 	long int prime; //A prime to divide number by.
 	primes = malloc(sizeof(long int) * num); //Give the array a size.
-	prime_sieve(num, primes); //Fill the array with primes.
+	pthread_create(&siever, NULL, &prime_sieve_wrapper, &num);//Set the thread to work.
 	while(num>1){
 		pthread_create(&finder, NULL, &prime_find, &num); //Set the thread to work.
 		addSpaces(num, orig_num); //Align the numbers.
@@ -52,6 +59,7 @@ void factor(long int num){
 	}
 	addSpaces(num, orig_num);//Align the number
 	printf("1|\n");
+	pthread_join(siever, NULL);//Wait for the thread to finish
 	free(primes); //Free up memory.
 	exit(0);
 }

@@ -13,11 +13,11 @@ void print_usage(FILE* stream, int exit_code){
 			"	-h	--help	        	Display this usage information.\n" //print usage message
 			"	-f	--fraction [fraction]	Convert improper fractions into proper fractions and/or simplify them.\n"
 			"	-F	--factor   [num]	Factorizes the number.\n"
-			"	-p	--primes   [num]	Lists all primes under [num].\n"
+			"	-p	--primes   [limit]	Prints all primes less than or equal to [limit].\n"
 			"\nExamples:\n"
 			"	%s -f 4/12			Simplifies the fraction 4/12\n"
 			"	%s -F 123			Factorizes the number 123\n"
-			"	%s -p 12			Lists all primes under 12\n", prog_name, prog_name, prog_name);
+			"	%s -p 123			Prints all primes less than or equal to 12\n", prog_name, prog_name, prog_name);
 	exit(exit_code);
 }
 //Above is borrowed and modified code from the book Advanced Linux Programming http://www.advancedlinuxprogramming.com/.
@@ -49,10 +49,10 @@ int main(int argc, char* argv[]){
 				sscanf(optarg, "%d%c%d", &x, &delim, &y); //Get nom and denom and throw delim away.
 				calc_simplify(x, y);
 			case 'F':
-				sscanf(optarg, "%d", &x);
+				sscanf(optarg, "%d", &x); //Get the number to factor
 				factor(x);
 			case 'p':
-				sscanf(optarg, "%d", &x);
+				sscanf(optarg, "%d", &x);//Get the limit
 				prime_sieve(x);
 				exit(0);
 			case '?': //Oops, someone entered an invalid option.

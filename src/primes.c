@@ -7,13 +7,14 @@ int prime_sieve(long int limit, ...){
 	long int prime_array = va_arg(argp, long int); //Get the array.
 	int* array = NULL; 
 	short int print = 0;
+	int* temp = NULL;
 	if(prime_array == 0){ //If there were no arrays to get
 		print = 1; //Go into print mode, instead of copying the primes to an array, they will be printed directly to the screen.
 		if(limit==1){ //If we were told to find primes that are less or equal to 1, print polite error.
 			printf("A prime number must be more than 1.\n");
 			exit(0);
 		}
-		int* temp = malloc(sizeof(long int) * limit); //A temporary array where the primes will be stored temporarily.
+		temp = malloc(sizeof(long int) * limit); //A temporary array where the primes will be stored temporarily.
 		array = temp; //Points to the temporaru array.
        		*(array) = 2; //Put the first prime in the array.
 		printf("2 "); //and print it to the screen.
