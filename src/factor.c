@@ -3,10 +3,10 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
-#ifdef HAVE_PTHREAD_H
 #include <pthread.h>
-#endif
-int* primes; //An array for the primes we will use to factor the number.
+#include <malloc.h>
+short int quit_siever; //The siever thread stops when this is set to 1
+int *primes; //An array for the primes we will use to factor the number.
 void* prime_sieve_wrapper(void* arg){
 	long int num = *((int*) arg);
 	prime_sieve(num, primes); //Fill the array with primes.
@@ -26,9 +26,9 @@ void* prime_find(void* arg){
 	}
 	return NULL;
 }
-void addSpaces(int num, long int orig_num){
-	short orig_num_digits = 1; //A variable to hold the number of digits in orig_num.
-	short num_digits = 1; //A variable to hold the number of digits in num.
+void addSpaces(long int num, long int orig_num){
+	short orig_num_digits = 0; //A variable to hold the number of digits in orig_num.
+	short num_digits = 0; //A variable to hold the number of digits in num.
 	while(orig_num>=10){//Count digits in orig_num.
 		++orig_num_digits;
 		orig_num/=10;
@@ -52,11 +52,12 @@ void factor(long int num){
 		pthread_create(&finder, NULL, &prime_find, &num); //Set the thread to work.
 		addSpaces(num, orig_num); //Align the numbers.
 		printf("%d|", num);
-		meaningOfLife(); //Think about the meaning of life while we wait for the thread to finish.
+		//meaningOfLife(); //Think about the meaning of life while we wait for the thread to finish.
 		pthread_join(finder, (void*) &prime); //get the prime from the thread.
 		printf("%d\n", prime);
 		num/=prime;
 	}
+	quit_siever = 1; //Tell siever to stop.
 	addSpaces(num, orig_num);//Align the number
 	printf("1|\n");
 	pthread_join(siever, NULL);//Wait for the thread to finish

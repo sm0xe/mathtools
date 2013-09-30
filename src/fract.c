@@ -10,25 +10,11 @@ void print_fraction(int whole, int nom, int denom){
 		printf("%d\n", whole);//Print it.
 	}
 	else{//If the fraction contains both a whole number and a remainder.
-		char spaces[6] = "     "; //Initializes a character string with spaces.
-		if(whole>9999){
-			spaces[6] = '\0';
-		}
-		else if(whole>999){
-			spaces[5] = '\0';
-		}
-		else if(whole>99){
-			spaces[4] = '\0';
-		}
-		else if(whole>9){
-			spaces[3] = '\0';
-		}
-		else{
-			spaces[2] = '\0';
-		}
-		printf("%s%d\n", spaces, nom);  //
+		addSpaces(nom, whole);          //
+		printf("  %d\n", nom);          //
 		printf("%d -\n", whole);        //Print them and align the remaining fraction.
-		printf("%s%d\n", spaces, denom);//
+		addSpaces(denom, whole);        //
+		printf("  %d\n", denom);        //
 	}
 	exit(0);
 }
