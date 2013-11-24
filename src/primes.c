@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <malloc.h>
+long int primecount;
 extern short int quit_siever; //The siever thread stops when this is set to 1.
 void prime_sieve(long int limit, ...){
 	va_list argp; //The optional argument (...)
@@ -26,8 +27,8 @@ void prime_sieve(long int limit, ...){
 		array = (int *)prime_array; //Points to prime_array.
 		*(array) = 2; //Put the first prime in the array.
 	}
-	long int primecount = 1;
-	long int i=3;
+	int i=3;
+	primecount=1;
 	do{ //Iterate through every number until limit.
 		int isPrime = 1; //If this stays 1, it means that the number is a prime.
 		for(int j=1;*(array+j)!=0;j++){ //Iterate through every known prime.

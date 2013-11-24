@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <malloc.h>
+extern long int primecount;
 short int quit_siever; //The siever thread stops when this is set to 1
 int *primes; //An array for the primes we will use to factor the number.
 void* prime_sieve_wrapper(void* arg){
@@ -15,14 +16,21 @@ void* prime_sieve_wrapper(void* arg){
 void* prime_find(void* arg){
 	long int num = *((int*) arg); //The number we have to divide.
 	long int prime; //The prime we will eventually find.
-	int primecount=0;
+	int prime_findcount=0;
 	while(1){
-		if(primes[primecount] == 0) continue; //If there is no prime number to check, check again.
-		if(num % primes[primecount]==0){ //Try to divide the number by the smallest prime.
-			prime = primes[primecount];//
+		if(primecount == prime_findcount){ //If there is no prime number to check, check again.
+			usleep(1);
+			continue;
+		}
+		//printf("DEBUG: Trying: %d\n", primes[prime_findcount]); //DEBUG
+		if(num % primes[prime_findcount]==0){ //Try to divide the number by the smallest prime.
+			prime = primes[prime_findcount];//
 			return (void*) prime;     //If it works, we return the prime.
 		}
-		primecount++; //If not, check the next prime in the array.
+		else{ //If not, try another prime
+			if(primes[prime_findcount] < num) prime_findcount++; //If the primes is smaller than the number we are dividing, keep going..
+			else if(primes[prime_findcount] > num) prime_findcount--; //If the primes is larger than the number, go back.
+		}
 	}
 	return NULL;
 }
@@ -41,8 +49,8 @@ void addSpaces(long int num, long int orig_num){
 		printf(" ");//Print spaces to align the numbers
 	}
 }
-void factor(long int num){
-	long int orig_num = num; //Store the original number for later usage.
+void factor(long long int num){
+	long long int orig_num = num; //Store the original number for later usage.
 	pthread_t siever; //The thread we use to fill the array with primes.
 	pthread_t finder; //The thread we use to find the prime.
 	long int prime; //A prime to divide number by.
