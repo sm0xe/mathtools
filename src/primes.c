@@ -3,6 +3,7 @@
 #include <stdarg.h>
 #include <malloc.h>
 long int primecount;
+extern short int verbose;
 extern short int quit_siever; //The siever thread stops when this is set to 1.
 void prime_sieve(long int limit, ...){
 	va_list argp; //The optional argument (...)
@@ -13,7 +14,7 @@ void prime_sieve(long int limit, ...){
 	int *array;
 	short int print = 0;
 	int *temp = NULL;
-	if(prime_array == 0){ //If there were no arrays to get
+	if(prime_array == 1){ //If there were no arrays to get
 		print = 1; //Go into print mode, instead of copying the primes to an array, they will be printed directly to the screen.
 		if(limit==1){ //If we were told to find primes that are less or equal to 1, print polite error.
 			printf("A prime number must be more than 1.\n");
@@ -36,12 +37,14 @@ void prime_sieve(long int limit, ...){
 				isPrime = 0; //Oops, the number is not a prime. Too bad.
 				break; //We'll just check the next one.
 			}
+			else if(quit_siever == 1) break;
 		}
 		if(isPrime){ //Hooray, the number seems to be a prime.
 			*(array+primecount) = i; //Add it to the list.
 			primecount++; //And increment the number of primes.
 			if(print == 1)
 				printf("%d ", i);
+			else if(verbose==1 && primecount%1000==0) printf("\n%d primes generated. Current: %d", primecount, i);
 		}
 		i+=2;
 	}while(i<=limit && (quit_siever == 0));
