@@ -6,6 +6,8 @@
 #include <pthread.h>
 #include <malloc.h>
 extern long int primecount;
+extern short int verbose;
+int lastprime;
 short int quit_siever; //The siever thread stops when this is set to 1
 int *primes; //An array for the primes we will use to factor the number.
 void* prime_sieve_wrapper(void* arg){
@@ -34,7 +36,7 @@ void* prime_find(void* arg){
 	}
 	return NULL;
 }
-void addSpaces(long int num, long int orig_num){
+int addSpaces(long int num, long int orig_num){
 	short orig_num_digits = 0; //A variable to hold the number of digits in orig_num.
 	short num_digits = 0; //A variable to hold the number of digits in num.
 	while(orig_num>=10){//Count digits in orig_num.
@@ -45,28 +47,42 @@ void addSpaces(long int num, long int orig_num){
 		++num_digits;
 		num/=10;
 	}
-	for(int i=0;i<orig_num_digits - num_digits;i++){
-		printf(" ");//Print spaces to align the numbers
-	}
+	return orig_num_digits-num_digits;
 }
 void factor(long long int num){
 	long long int orig_num = num; //Store the original number for later usage.
 	pthread_t siever; //The thread we use to fill the array with primes.
 	pthread_t finder; //The thread we use to find the prime.
 	long int prime; //A prime to divide number by.
+	long int factors[20];
+	int count=0;
+	long int results[20];
+	int spaces[20];
 	primes = malloc(sizeof(long int) * num); //Give the array a size.
 	pthread_create(&siever, NULL, &prime_sieve_wrapper, &num);//Set the thread to work.
 	while(num>1){
 		pthread_create(&finder, NULL, &prime_find, &num); //Set the thread to work.
-		addSpaces(num, orig_num); //Align the numbers.
-		printf("%d|", num);
 		//meaningOfLife(); //Think about the meaning of life while we wait for the thread to finish.
+		results[count] = num;
+		spaces[count] = addSpaces(num, orig_num); //Align the numbers.
 		pthread_join(finder, (void*) &prime); //get the prime from the thread.
-		printf("%d\n", prime);
 		num/=prime;
+		factors[count] = prime;
+		count++;
 	}
 	quit_siever = 1; //Tell siever to stop.
-	addSpaces(num, orig_num);//Align the number
+	if(verbose){
+		printf("%d primes generated. Last prime: %d\n\n", primecount, lastprime);
+	}
+	for(int i=0; i<count ; i++){
+		for(int j=0; j<spaces[i] ; j++){
+			printf(" ");//Print spaces to align the numbers
+		}
+		printf("%d|%d\n", results[i], factors[i]);
+	}
+	for(int i=0; i<addSpaces(num, orig_num) ; i++) {
+		printf(" ");;//Align the number
+	}
 	printf("1|\n");
 	pthread_join(siever, NULL);//Wait for the thread to finish
 	free(primes); //Free up memory.

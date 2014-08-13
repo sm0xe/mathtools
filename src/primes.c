@@ -3,6 +3,7 @@
 #include <stdarg.h>
 #include <malloc.h>
 long int primecount;
+extern int lastprime;
 extern short int verbose;
 extern short int quit_siever; //The siever thread stops when this is set to 1.
 void prime_sieve(long int limit, ...){
@@ -42,13 +43,17 @@ void prime_sieve(long int limit, ...){
 		if(isPrime){ //Hooray, the number seems to be a prime.
 			*(array+primecount) = i; //Add it to the list.
 			primecount++; //And increment the number of primes.
-			if(print == 1)
+			if(print == 1){
 				printf("%d ", i);
-			else if(verbose==1 && primecount%1000==0) printf("\n%d primes generated. Current: %d", primecount, i);
+			}
+			else if(verbose){
+				lastprime = i;
+			}
 		}
 		i+=2;
 	}while(i<=limit && (quit_siever == 0));
-	if(print == 1) printf("\n"); //Newline for prettiness.
-
 	free(temp); //Free up memory
+	if(print == 1){
+		printf("\n"); //Newline for prettiness.
+	}
 }
