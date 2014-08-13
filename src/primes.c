@@ -4,8 +4,9 @@
 #include <malloc.h>
 long int primecount;
 extern int lastprime;
-extern short int verbose;
+extern short int stats;
 extern short int quit_siever; //The siever thread stops when this is set to 1.
+extern short int prime_finished; //Whether prime generation finished prematurely (0) or because limit was reached (1)
 void prime_sieve(long int limit, ...){
 	va_list argp; //The optional argument (...)
 	va_start(argp, limit);
@@ -46,12 +47,13 @@ void prime_sieve(long int limit, ...){
 			if(print == 1){
 				printf("%d ", i);
 			}
-			else if(verbose){
-				lastprime = i;
+			else if(stats){
+				lastprime = i; //Hold on to last generated prime for future reference
 			}
 		}
 		i+=2;
 	}while(i<=limit && (quit_siever == 0));
+	if(quit_siever==0) prime_finished=1; //Generation finished because limit was reached
 	free(temp); //Free up memory
 	if(print == 1){
 		printf("\n"); //Newline for prettiness.
