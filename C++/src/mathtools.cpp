@@ -4,6 +4,9 @@
 #include <sstream>
 #include <vector>
 #include <getopt.h>
+#include "primes.h"
+#include "factor.h"
+#include "fract.h"
 using namespace std;
 
 const char* prog_name;
@@ -63,7 +66,6 @@ int main(int argc, char* argv[]){
 				simplify = 1;
 				factorize = 0;
 				prime_print = 0;
-				cout << "x: " << x << " y: " << y << endl;
 				break;
 			case 'F': //Factorization
 				opt = optarg;
@@ -71,7 +73,6 @@ int main(int argc, char* argv[]){
 				simplify = 0;
 				factorize = 1;
 				prime_print = 0;
-				cout << "x: " << x << endl;
 				break;
 			case 'p': //Prime generation
 				opt = optarg;
@@ -79,7 +80,6 @@ int main(int argc, char* argv[]){
 				simplify = 0;
 				factorize = 0;
 				prime_print = 1;
-				cout << "x: " << x << endl;
 				break;
 			case '?': //Oops, someone entered an invalid option
 				print_usage(1);
@@ -95,10 +95,10 @@ int main(int argc, char* argv[]){
 		calc_simplify(x, y);	//
 	}				//
 	else if(factorize){		//
-		factor(x);		//Run correct function
+		//factor(x);		//Run correct function
 	}				//
 	else if(prime_print){		//
-		prime_sieve(x);		//
+		//prime_sieve(x);		//
 		exit(0);		//
 	}				//
 	print_usage(0);//If we actually come this far, it means that something went wrong.
