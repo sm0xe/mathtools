@@ -1,0 +1,29 @@
+
+     _ _   _  _|_ |_     _|_  _   _  |  _
+    | | | | |  |  | | _|_ |  | | | | | |_
+    | | | |_|_ |_ | |  |  |_ |_| |_| |  _|
+   _______________________________________
+                      _
+                     / |
+            	       |
+            	       |
+
+Mathtools is a collection of utilities for dealing with fractions, factorization, etc.
+
+INSTALLATION
+------------
+
+1. ./autogen.sh
+2. ./configure
+3. make
+4. make install
+
+or
+
+1. ./autogen.sh && ./configure && make && make install
+
+CONTACT
+-------
+
+Karl August Hoivik
+gussefant@gmail.com
