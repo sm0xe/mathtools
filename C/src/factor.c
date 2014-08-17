@@ -92,7 +92,7 @@ void factor(long long int num){
 		printf("1|\n");
 	}
 	if(factor_print_mode==1 || factor_print_mode==2){ //User wants only a list of factors or both.
-		if(factor_print_mode) printf("\n"); //If the user wants both, print a newline for prettiness.
+		if(factor_print_mode==2) printf("\n"); //If the user wants both, print a newline for prettiness.
 		for(int i=0; i<count ; i++){
 			printf("%d ", factors[i]); //Print all factors with a space between
 		}
