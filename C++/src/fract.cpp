@@ -1,5 +1,7 @@
 #include <iostream>
-#include "factor.h"
+
+int addSpaces(int num, int orig_num);
+
 using namespace std;
 void print_fraction(int whole, int nom, int denom){
 	if(whole==0){ //If there is no whole number.

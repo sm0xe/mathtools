@@ -1,14 +1,13 @@
-//#include "config.h"
+#include "config.h"
 #include <string>
 #include <iostream>
 #include <sstream>
 #include <vector>
 #include <getopt.h>
-#include "primes.h"
-#include "factor.h"
-#include "fract.h"
 using namespace std;
-
+void factor(int num);
+void calc_simplify(int num, int denom);
+void prime_sieve(int limit);
 const char* prog_name;
 
 int stats=0, simplify=0, prime_print=0, factorize=0, factor_print_mode=0;
@@ -95,10 +94,10 @@ int main(int argc, char* argv[]){
 		calc_simplify(x, y);	//
 	}				//
 	else if(factorize){		//
-		//factor(x);		//Run correct function
+		factor(x);		//Run correct function
 	}				//
 	else if(prime_print){		//
-		//prime_sieve(x);		//
+		prime_sieve(x);		//
 		exit(0);		//
 	}				//
 	print_usage(0);//If we actually come this far, it means that something went wrong.
