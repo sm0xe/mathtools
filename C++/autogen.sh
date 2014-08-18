@@ -1,1 +1,3 @@
-aclocal && automake --add-missing && autoconf
+touch NEWS AUTHORS ChangeLog
+automake --add-missing --copy
+autoreconf --install
