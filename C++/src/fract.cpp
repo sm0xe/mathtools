@@ -1,27 +1,42 @@
 #include <iostream>
 
-int addSpaces(int num, int orig_num);
+int count_digits(int num);
 
 using namespace std;
+void draw_vinculum(int num){
+	for(int i=0; i<=num ; i++){
+		cout << "-";
+	}
+}
 void print_fraction(int whole, int nom, int denom){
-	if(whole==0){ //If there is no whole number.
-		cout << nom << endl;	//
-		cout << "-" << endl;	//Print the fraction.
-		cout << denom << endl;	//
+	int whole_digits = count_digits(whole);
+	int nom_digits = count_digits(nom);
+	int denom_digits = count_digits(denom);
+	int padding = (denom_digits-nom_digits)/2;
+
+	if(whole==0){ //If there is no whole number
+		for(int i=0; i<padding; i++){
+			cout << " ";
+		}
+		cout << nom << endl;		//
+		draw_vinculum(denom_digits);	//Print the fraction.
+		cout << endl << denom << endl;		//
 	}
 	else if((nom == 0)||(denom == 0)){ //If the fraction is only a whole number.
 		cout << whole << endl;
 	}
 	else{ //If the fraction contains both a whole number and a remainder.
-		for(int i=0 ; i<addSpaces(nom, whole) ; i++){	//
+		for(int i=0; i<=whole_digits+padding+1 ; i++){	//
 			cout << " ";				//
 		}						//
-		cout << " " << nom << endl;			//Print them and align the remaining fraction
-		cout << whole << " -" << endl;			//
-		for(int i=0; i<addSpaces(nom, whole) ; i++){	//
+		cout << nom << endl;				//
+		cout << whole << " ";				//
+		draw_vinculum(denom_digits);			//Print them and align the remaining fraction
+		cout << endl;					//
+		for(int i=0; i<=whole_digits+1 ; i++){		//
 			cout << " ";				//
 		}						//
-		cout << " " << denom << endl;			//
+		cout << denom << endl;				//
 	}
 	exit(0);
 }
