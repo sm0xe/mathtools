@@ -36,18 +36,20 @@ int prime_find(int num){
 		}
 	}
 }
-int addSpaces(int num, int orig_num){
-	short orig_num_digits = 0; //A variable to hold the number of digits in orig_num
-	short num_digits = 0; //A variable to hold the number of digits in num
-	while(orig_num>=10){//Count digits in orig_num
-		++orig_num_digits;
-		orig_num/=10;
-	}
-	while(num>=10){ //Count digits in num
-		++num_digits;
+int count_digits(int num){
+	short digits = 0;
+	while(num>=10){
+		++digits;
 		num/=10;
 	}
-	return (orig_num_digits-num_digits); //Return difference
+	return digits;
+}
+void addSpaces(int num, int orig_num){
+	short orig_num_digits = count_digits(orig_num); //A variable to hold the number of digits in orig_num
+	short num_digits = count_digits(num); //A variable to hold the number of digits in num
+	for(int i=0; i<(orig_num_digits - num_digits) ; i++){
+		cout << " ";
+	}
 }
 void factor(int num){
 	int orig_num = num;
@@ -59,7 +61,6 @@ void factor(int num){
 	while(num>1){
 		auto fut = async(prime_find, num);
 		results.push_back(num);
-		spaces.push_back(addSpaces(num, orig_num));
 		prime = fut.get();
 		num/=prime;
 		factors.push_back(prime);
@@ -72,14 +73,10 @@ void factor(int num){
 	}
 	if(factor_print_mode == 0 || factor_print_mode==2){
 		for(int i=0; i<results.size(); i++){
-			for(int j=0; j<spaces.at(i); j++){
-				cout << " ";
-			}
+			addSpaces(results.at(i), orig_num);
 			cout << results.at(i) << "|" << factors.at(i) << endl;
 		}
-		for(int i=0; i<addSpaces(num, orig_num) ; i++){
-			cout << " ";
-		}
+		addSpaces(1, orig_num);
 		cout << "1|\n";
 	}
 	if(factor_print_mode == 1 || factor_print_mode == 2){
