@@ -10,7 +10,8 @@ void calc_simplify(int num, int denom);
 void prime_sieve(int limit);
 const char* prog_name;
 
-int stats=0, simplify=0, prime_print=0, factorize=0, factor_print_mode=0;
+enum functions {simplify, prime_print, factorize} task;
+int stats=0, factor_print_mode=0;
 
 void print_usage(int exit_code){
 	cout << "Usage: " << prog_name << " options [ args ... ]\n";
@@ -62,23 +63,17 @@ int main(int argc, char* argv[]){
 				char delim;
 				opt = optarg;
 				stringstream(opt) >> x >> delim >> y; //Get nominator and denominator and throw delim ("/") away.
-				simplify = 1;
-				factorize = 0;
-				prime_print = 0;
+				task = simplify;
 				break;
 			case 'F': //Factorization
 				opt = optarg;
 				stringstream(opt) >> x; //Get the number to factorize
-				simplify = 0;
-				factorize = 1;
-				prime_print = 0;
+				task = factorize;
 				break;
 			case 'p': //Prime generation
 				opt = optarg;
 				stringstream(opt) >> x; //Get the limit
-				simplify = 0;
-				factorize = 0;
-				prime_print = 1;
+				task = prime_print;
 				break;
 			case '?': //Oops, someone entered an invalid option
 				print_usage(1);
@@ -90,15 +85,15 @@ int main(int argc, char* argv[]){
 		}
 	}
 	
-	if(simplify){			//
-		calc_simplify(x, y);	//
-	}				//
-	else if(factorize){		//
-		factor(x);		//Run correct function
-	}				//
-	else if(prime_print){		//
-		prime_sieve(x);		//
-		exit(0);		//
-	}				//
+	if(task == simplify){			//
+		calc_simplify(x, y);		//
+	}					//
+	else if(task == factorize){		//
+		factor(x);			//Run correct function
+	}					//
+	else if(task == prime_print){		//
+		prime_sieve(x);			//
+		exit(0);			//
+	}					//
 	print_usage(0);//If we actually come this far, it means that something went wrong.
 }
