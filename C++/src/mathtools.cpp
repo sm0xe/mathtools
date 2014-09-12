@@ -6,9 +6,9 @@
 #include <getopt.h>
 using namespace std;
 
-void factor(int num);	//Factorization function from factor.cpp
+void factor(long long int num);	//Factorization function from factor.cpp
 void calc_simplify(int num, int denom);	//Fraction simplifier function from fract.cpp
-void prime_sieve(int limit);	//Prime printing function from primes.cpp
+void prime_sieve(long long int limit);	//Prime printing function from primes.cpp
 
 const char* prog_name;
 
@@ -33,7 +33,7 @@ void print_usage(int exit_code){
 }
 
 int main(int argc, char* argv[]){
-	int x, y;
+	long long int x, y;
 
 	prog_name = argv[0];
 
@@ -52,7 +52,6 @@ int main(int argc, char* argv[]){
 		{ "primes", 1, NULL, 'p' },
 		{ NULL, 0, NULL, 0 }
 	};
-
 	while ((next_option = getopt_long(argc, argv, short_options, long_options, NULL)) != -1){
 		string opt;
 		switch(next_option){

@@ -1,6 +1,6 @@
 #include <iostream>
 
-int count_digits(int num);
+int count_digits(long long int num);
 
 using namespace std;
 void draw_vinculum(int num){

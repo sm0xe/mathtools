@@ -1,12 +1,14 @@
 #include <iostream>
 #include <vector>
+#include <signal.h>
 using namespace std;
 int primecount;
 extern int lastprime;
 extern short int stats;
-extern short int quit_siever;
+extern sig_atomic_t quit_siever;
 extern short int prime_finished;
-void prime_sieve(int limit){
+
+void prime_sieve(long long int limit){
 	if(limit==1){
 		cout << "A prime number must be more than 1." << endl;
 		exit(0);
@@ -33,7 +35,7 @@ void prime_sieve(int limit){
 	}while(i<=limit);
 	cout << endl;
 }
-void prime_sieve(int limit, vector<int>* prime_array){
+void prime_sieve(long long int limit, vector<long long int>* prime_array){
 	quit_siever = 0;
 	(*prime_array).push_back(2);
 	int i=3;
