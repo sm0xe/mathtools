@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([mathtools], [3.0], [gussefant@gmail.com])
+AC_INIT([mathtools], [3.1], [gussefant@gmail.com])
 AC_CONFIG_SRCDIR([src/mathtools.cpp])
 AC_CONFIG_HEADERS([config.h])
 
