@@ -6,7 +6,7 @@
 #include <getopt.h>
 using namespace std;
 
-void factor(long long int num);	//Factorization function from factor.cpp
+void factor(long long int);	//Factorization function from factor.cpp
 void calc_simplify(int num, int denom);	//Fraction simplifier function from fract.cpp
 void prime_sieve(long long int limit);	//Prime printing function from primes.cpp
 

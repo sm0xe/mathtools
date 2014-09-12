@@ -6,7 +6,7 @@
 #include <signal.h>
 using namespace std;
 
-void prime_sieve(long long int limit, vector<long long int>* prime_array); //Prime generation function from primes.cpp
+void prime_sieve(vector<long long int>* prime_array); //Prime generation function from primes.cpp
 
 extern long int primecount; //How many primes have been generated
 extern short int stats; //Whether user wants the prime generation statistics or not
@@ -15,12 +15,13 @@ short int prime_finished=0; //Whether the prime generation function finished pre
 int lastprime; //Last generated prime. Used in statistics
 sig_atomic_t quit_siever; //Prime generation stops when this is set to 1
 vector<long long int> primes; //A vector to contain all generated primes.
+long long int *limit;
 void siginthandler(int param){
 	quit_siever = 1;
 }
 void prime_sieve_wrapper(long long int arg){
 	long long int num = arg;
-	prime_sieve(num, &primes); //Fill vector with primes
+	prime_sieve(&primes); //Fill vector with primes
 }
 long long int prime_find(long long int num){
 	int prime; //The prime we will eventually find
@@ -57,11 +58,12 @@ void addSpaces(long long int num, long long int orig_num){
 }
 void factor(long long int num){
 	long long int orig_num = num; //Store original number for future reference.
+	limit = &num;
 	long long int prime; //The prime we will eventually find
 	vector<long long int> factors; //Vector containing all found factors
 	vector<long long int> results; //Vector containing all result of dividing by the found factors
 	signal(SIGINT, siginthandler);
-	thread siever(&prime_sieve_wrapper, num); //Start a thread with the task of filling the "primes" vector with primes
+	thread siever(&prime_sieve, &primes); //Start a thread with the task of filling the "primes" vector with primes
 	while(num>1 && quit_siever==0){
 		auto fut = async(prime_find, num); //Start a thread with the task of searching the primes for a prime that the number can be divided by.
 		results.push_back(num); //Add the current number to the list of results

@@ -7,6 +7,7 @@ extern int lastprime;
 extern short int stats;
 extern sig_atomic_t quit_siever;
 extern short int prime_finished;
+extern long long int *limit;
 
 void prime_sieve(long long int limit){
 	if(limit==1){
@@ -35,11 +36,12 @@ void prime_sieve(long long int limit){
 	}while(i<=limit);
 	cout << endl;
 }
-void prime_sieve(long long int limit, vector<long long int>* prime_array){
+void prime_sieve(vector<long long int>* prime_array){
 	quit_siever = 0;
 	(*prime_array).push_back(2);
 	int i=3;
-	primecount=1;
+	primecount=1;	
+	short int isPrime = 1;
 	do{
 		short int isPrime = 1;
 		for(int j=0; j<(*prime_array).size(); j++){
@@ -55,6 +57,6 @@ void prime_sieve(long long int limit, vector<long long int>* prime_array){
 			if(stats) lastprime = i;
 		}
 		i+=2;
-	}while(i<=limit && (quit_siever == 0));
+	}while(i<=*limit && (quit_siever == 0));
 	if(quit_siever==0) prime_finished=1;
 }
