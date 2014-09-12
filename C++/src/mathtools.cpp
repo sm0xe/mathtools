@@ -5,13 +5,15 @@
 #include <vector>
 #include <getopt.h>
 using namespace std;
-void factor(int num);
-void calc_simplify(int num, int denom);
-void prime_sieve(int limit);
+
+void factor(int num);	//Factorization function from factor.cpp
+void calc_simplify(int num, int denom);	//Fraction simplifier function from fract.cpp
+void prime_sieve(int limit);	//Prime printing function from primes.cpp
+
 const char* prog_name;
 
-enum functions {simplify, prime_print, factorize} task;
-int stats=0, factor_print_mode=0;
+enum functions {simplify, prime_print, factorize} task; //What feature the user wants to use
+int stats=0, factor_print_mode=0; //Flags for factorization function
 
 void print_usage(int exit_code){
 	cout << "Usage: " << prog_name << " options [ args ... ]\n";
