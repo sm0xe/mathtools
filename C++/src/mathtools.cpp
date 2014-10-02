@@ -12,7 +12,7 @@ void prime_sieve(long long int limit);	//Prime printing function from primes.cpp
 
 const char* prog_name;
 
-enum functions {simplify, prime_print, factorize} task; //What feature the user wants to use
+enum functions {help, simplify, prime_print, factorize} task; //What feature the user wants to use
 int stats=0, factor_print_mode=0; //Flags for factorization function
 
 void print_usage(int exit_code){
@@ -26,8 +26,8 @@ void print_usage(int exit_code){
 	cout << "		--both                  Show the division and list factors underneath.\n";
 	cout << "	-p      --primes   [limit]      Prints all primes less than or equal to [limit].\n";
 	cout <<	"\nExamples:\n";
-	cout <<	"	" << prog_name <<" -f 4/12                      Simplifies the fraction 4/12\n";
-	cout <<	"       " << prog_name << " -F 123                       Factorizes the number 123\n";
+	cout <<	"	" << prog_name << " -f 4/12                      Simplifies the fraction 4/12\n";
+	cout <<	"	" << prog_name << " -F 123                       Factorizes the number 123\n";
 	cout <<	"	" << prog_name << " -p 123                       Prints all primes less than or equal to 123\n";
 	exit(exit_code);
 }
