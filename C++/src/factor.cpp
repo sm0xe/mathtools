@@ -16,6 +16,7 @@ int lastprime; //Last generated prime. Used in statistics
 sig_atomic_t quit_siever; //Prime generation stops when this is set to 1
 vector<long long int> primes; //A vector to contain all generated primes.
 long long int *limit;
+int prime_findcount = 0; //
 void siginthandler(int param){
 	quit_siever = 1;
 }
@@ -25,7 +26,6 @@ void prime_sieve_wrapper(long long int arg){
 }
 long long int prime_find(long long int num){
 	int prime; //The prime we will eventually find
-	int prime_findcount = 0; //
 	while(quit_siever==0){
 		if(primecount == prime_findcount){ //If we have reached the end of the vector, wait a bit and try again
 			usleep(1);
@@ -56,7 +56,7 @@ void addSpaces(long long int num, long long int orig_num){
 		cout << " ";
 	}
 }
-void factor(long long int num){
+void multi_factor(long long int num){
 	long long int orig_num = num; //Store original number for future reference.
 	limit = &num;
 	long long int prime; //The prime we will eventually find
@@ -95,5 +95,60 @@ void factor(long long int num){
 		}
 	}
 	siever.join();
+	exit(0);
+}
+void single_factor(long long int num){
+	long long int orig_num = num;
+	vector<long int> prime_array;
+	vector<long long int> factors;
+	vector<long long int> results;
+	prime_array.push_back(2);
+	int i=3;
+	primecount=1;	
+	while(num%2 == 0){
+		factors.push_back(2);
+		results.push_back(num);
+		num/=2;
+	}
+	while(i<=num && quit_siever == 0){
+		short int isPrime = 1;
+		for(int j=0; j<prime_array.size(); j++){
+			if((i % prime_array.at(j)) == 0){
+				isPrime = 0;
+				break;
+			}
+		}	
+		if(isPrime){
+			prime_array.push_back(i);
+			primecount++;
+			while(num%i == 0){
+				factors.push_back(i);
+				results.push_back(num);
+				num/=i;
+			}
+		}
+		i+=2;
+	}
+	if(stats){ //Produce statistics for this run
+		cout << primecount << " primes generated. Last prime: " << lastprime;
+	}	
+	if(quit_siever==0){
+		quit_siever = 1; //Stop the prime generation, if not already stopped
+		if(factor_print_mode == 0 || factor_print_mode==2){
+			for(int i=0; i<results.size(); i++){
+				addSpaces(results.at(i), orig_num);
+				cout << results.at(i) << "|" << factors.at(i) << endl;
+			}
+			addSpaces(1, orig_num);
+			cout << "1|\n";
+		}
+		if(factor_print_mode == 1 || factor_print_mode == 2){
+			if(factor_print_mode==2) cout << endl;
+			for(int i=0 ; i<factors.size(); i++){
+				cout << factors.at(i) << " ";
+			}
+			cout << endl;
+		}
+	}
 	exit(0);
 }

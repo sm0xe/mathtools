@@ -6,20 +6,23 @@
 #include <getopt.h>
 using namespace std;
 
-void factor(long long int);	//Factorization function from factor.cpp
+void single_factor(long long int);	//Factorization function from factor.cpp
+void multi_factor(long long int);	//Factorization function from factor.cpp
 void calc_simplify(int num, int denom);	//Fraction simplifier function from fract.cpp
 void prime_sieve(long long int limit);	//Prime printing function from primes.cpp
 
 const char* prog_name;
 
 enum functions {help, simplify, prime_print, factorize} task; //What feature the user wants to use
-int stats=0, factor_print_mode=0; //Flags for factorization function
+int stats=0, factor_print_mode=0, factor_mode=1; //Flags for factorization function
 
 void print_usage(int exit_code){
 	cout << "Usage: " << prog_name << " options [ args ... ]\n";
 	cout << "	-h      --help                  Display this usage information.\n";
 	cout << "	-f      --fraction [fraction]   Convert improper fractions into proper fractions and/or simplify them.\n";
 	cout << "	-F	--factor   [num]        Factorizes the number.\n";
+	cout << "		--simple		Factorize using a single process. Slower, but less resource-intensive.\n";
+	cout << "		--multi			Use multi-threaded factorization. Faster, but more resource-intensive. (default)\n";
 	cout << "		--stats                 Prints statistics for prime generation. (Amount and last generated)\n";
 	cout << "		--list                  Only list the factors (default is division).\n";
 	cout << "		--div                   Only show the division (default).\n";
@@ -45,6 +48,8 @@ int main(int argc, char* argv[]){
 		{ "div", 0, &factor_print_mode, 0},
 		{ "list", 0, &factor_print_mode, 1},
 		{ "both", 0, &factor_print_mode, 2},
+		{ "simple", 0, &factor_mode, 0},
+		{ "multi", 0, &factor_mode, 1},
 		{ "stats", 0, &stats, 1 },
 		{ "help", 0, NULL, 'h' },
 		{ "fraction", 1, NULL, 'f' }, //Long options, synonyms and if they take an argument.
@@ -86,15 +91,20 @@ int main(int argc, char* argv[]){
 		}
 	}
 	
-	if(task == simplify){			//
-		calc_simplify(x, y);		//
-	}					//
-	else if(task == factorize){		//
-		factor(x);			//Run correct function
-	}					//
-	else if(task == prime_print){		//
-		prime_sieve(x);			//
-		exit(0);			//
-	}					//
+	if(task == simplify){						//
+		calc_simplify(x, y);					//
+	}								//
+	else if(task == factorize){					//
+		switch(factor_mode){					//
+			case 0:						//
+				single_factor(x);			//
+			case 1:						//
+				multi_factor(x);			//Run correct function
+		}							//
+	}								//
+	else if(task == prime_print){					//
+		prime_sieve(x);						//
+		exit(0);						//
+	}								//
 	print_usage(0);//If we actually come this far, it means that something went wrong.
 }
