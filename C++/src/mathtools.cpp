@@ -40,11 +40,11 @@ int main(int argc, char* argv[]){
 
 	prog_name = argv[0];
 
-	int next_option;
+	int next_opt;
 
-	const char* short_options = "hf:F:p:"; //Option flags the program can take.
+	const char* short_opt = "hf:F:p:"; //Option flags the program can take.
 
-	const struct option long_options[] = {
+	const struct option long_opt[] = {
 		{ "div", 0, &factor_print_mode, 0},
 		{ "list", 0, &factor_print_mode, 1},
 		{ "both", 0, &factor_print_mode, 2},
@@ -57,9 +57,9 @@ int main(int argc, char* argv[]){
 		{ "primes", 1, NULL, 'p' },
 		{ NULL, 0, NULL, 0 }
 	};
-	while ((next_option = getopt_long(argc, argv, short_options, long_options, NULL)) != -1){
+	while ((next_opt=getopt_long(argc,argv,short_opt,long_opt, NULL))!=-1){
 		string opt;
-		switch(next_option){
+		switch(next_opt){
 			case 0: //Option sets a flag, do nothing
 				break;
 			case 'h':
@@ -90,7 +90,6 @@ int main(int argc, char* argv[]){
 				abort();
 		}
 	}
-	
 	if(task == simplify){						//
 		calc_simplify(x, y);					//
 	}								//
@@ -101,8 +100,7 @@ int main(int argc, char* argv[]){
 			case 1:						//
 				multi_factor(x);			//Run correct function
 		}							//
-	}								//
-	else if(task == prime_print){					//
+	}								//else if(task == prime_print){					//
 		prime_sieve(x);						//
 		exit(0);						//
 	}								//
