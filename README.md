@@ -12,15 +12,12 @@ Mathtools is a collection of utilities for dealing with fractions, factorization
 
 INSTALLATION
 ------------
-
-1. ./autogen.sh
-2. ./configure
-3. make
-4. make install
-
-or
-
-1. ./autogen.sh && ./configure && make && make install
+```sh
+./autogen.sh
+./configure
+make
+make install
+```
 
 CONTACT
 -------
