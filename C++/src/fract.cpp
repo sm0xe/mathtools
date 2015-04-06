@@ -3,6 +3,15 @@
 int count_digits(long long int num);
 
 using namespace std;
+int gcd(int a, int b){
+	if(a==0){
+			return b;
+		}
+		else{
+			return gcd(b%a, a);
+		}
+	}
+
 void draw_vinculum(int num){
 	for(int i=0; i<=num ; i++){
 		cout << "-";
@@ -43,13 +52,8 @@ void print_fraction(int whole, int nom, int denom){
 void calc_simplify(int nom, int denom){
 	int whole = nom / denom; //Get the whole number
 	int rem = nom % denom; //Get the remainder
-
-	for(int i=rem; i>1; i--){//Simplify the fraction by checking for a common factor
-		if((rem%i==0)&&(denom%i==0)){ //If a common factor has been found
-			rem/=i;
-			denom/=i; //Divide the remainder and denominator by the common factor.
-			break;
-		}
-	}
+	int div = gcd(rem, denom); //Find greatest common divisor
+	rem/=div; //Simplify fraction
+	denom/=div;
 	print_fraction(whole, rem, denom); //Pass the whole number, the remainder and the denominator to the printing function.
 }
