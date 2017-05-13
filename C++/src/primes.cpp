@@ -16,16 +16,16 @@ void prime_sieve(long long int limit){
 		exit(0);
 	}
 	primecount=1;
-	bool isprime[limit];
-	for(int i=0; i<limit; i++){
-	    isprime[i]=true;
+	vector<bool> isprime(limit,true);
+	if(isprime.max_size()<limit){
+	    limit = isprime.max_size();
 	}
-	for(int i=2; i<limit; i++){
-	    if(isprime[i]==true){
+	for(long long int i=2; i<limit; i++){
+	    if(isprime.at(i)==true){
 		primecount++;
 		cout << i << " ";
-		for(int j=i*i; j<limit; j+=i){
-		    isprime[j]=false;
+		for(long long int j=i*i; j<limit; j+=i){
+		    isprime.at(j)=false;
 		}
 	    }
 	}
@@ -34,17 +34,14 @@ void prime_sieve(long long int limit){
 void prime_sieve(vector<long long int>* prime_array){
 	quit_siever = 0;
 	primecount=0;
-	bool isprime[*limit];
-	for(int i=0; i<*limit; i++){
-	    isprime[i]=true;
-	}
-	for(int i=2; i<*limit; i++){
-	    if(isprime[i]==true){
+	vector<bool> isprime(*limit+1,true);
+	for(long long int i=2; i<=*limit; i++){
+	    if(isprime.at(i)==true){
 	    	(*prime_array).push_back(i);
 		primecount++;
 		if(stats) lastprime=i;
-		for(int j=i*i; j<*limit; j+=i){
-		    isprime[j]=false;
+		for(long long int j=i*i; j<=*limit; j+=i){
+		    isprime.at(j)=false;
 		}
 	    }
 	    if(quit_siever==1) break;

@@ -25,7 +25,7 @@ void prime_sieve_wrapper(long long int arg){
 	prime_sieve(&primes); //Fill vector with primes
 }
 long long int prime_find(long long int num){
-	int prime; //The prime we will eventually find
+	long long int prime; //The prime we will eventually find
 	while(quit_siever==0){
 		if(primecount == prime_findcount){ //If we have reached the end of the vector, wait a bit and try again
 			usleep(1);
@@ -37,7 +37,7 @@ long long int prime_find(long long int num){
 		}
 		else if(prime_findcount < primes.size()){ //If not, try next prime in vector
 			if(primes.at(prime_findcount) < num) prime_findcount++; //Increment counter as long as the current prime is less than the number we are trying to divide
-			else if(primes.at(prime_findcount) > num) prime_findcount--; //Decrement counter if current prime is larger than the number. This should never occur.
+			else if(primes.at(prime_findcount) > num) prime_findcount/=2; //Decrement counter if current prime is larger than the number. This should never occur.
 		}
 	}
 }
