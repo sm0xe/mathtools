@@ -4,17 +4,19 @@
 #include <sstream>
 #include <vector>
 #include <getopt.h>
+#include <math.h>
 using namespace std;
 
-void single_factor(long long int);	//Factorization function from factor.cpp
-void multi_factor(long long int);	//Factorization function from factor.cpp
-void calc_simplify(int num, int denom);	//Fraction simplifier function from fract.cpp
-void prime_sieve(long long int limit);	//Prime printing function from primes.cpp
-void derive(string polynomial);		//Polynomial derivation from derive.cpp
+void single_factor(long long int);		//Factorization function from factor.cpp
+void multi_factor(long long int);		//Factorization function from factor.cpp
+void calc_simplify(int num, int denom);		//Fraction simplifier function from fract.cpp
+void prime_sieve(long long int limit);		//Prime printing function from primes.cpp
+bool primecheck_k(long long int prime, int k);	//Miller-Rabin primality test from primes.cpp
+void derive(string polynomial);			//Polynomial derivation from derive.cpp
 
 const char* prog_name;
 
-enum functions {help, simplify, prime_print, factorize, derivation} task; //What feature the user wants to use
+enum functions {help, simplify, prime_print, factorize, derivation,primality} task; //What feature the user wants to use
 int stats=0, factor_print_mode=0, factor_mode=1; //Flags for factorization function
 
 void print_usage(int exit_code){
@@ -30,11 +32,15 @@ void print_usage(int exit_code){
 	cout << "		--both                  Show the division and list factors underneath.\n";
 	cout << "	-p      --primes   [limit]      Prints all primes less than or equal to [limit].\n";
 	cout << "	-d	--derive   [polynomial]	Derives the polynomial function.\n";
+	cout << "	-c	--primality[num]	Tests the number for primality (Miller-Rabin).\n";
+	cout << "	-k	--iter     [limit]	How many times the Miller-Rabin primality test should run.\n";
 	cout <<	"\nExamples:\n";
 	cout <<	"	" << prog_name << " -f 4/12			Simplifies the fraction 4/12\n";
 	cout <<	"	" << prog_name << " -F 123			Factorizes the number 123\n";
 	cout <<	"	" << prog_name << " -p 123			Prints all primes less than or equal to 123\n";
 	cout << "	" << prog_name << " -d 2x^2-x+12		Prints the derivative of 2x^2-x+12\n";
+	cout << "	" << prog_name << " -c 561			Returns whether 561 is a prime or composite. Run 7 times.\n";
+	cout << "	" << prog_name << " -c 1105 -k 2		Returns whether 1105 is a prime or composite. Run 2 times.\n";
 	exit(exit_code);
 }
 
@@ -46,7 +52,7 @@ int main(int argc, char* argv[]){
 
 	int next_opt;
 
-	const char* short_opt = "hf:F:p:d:"; //Option flags the program can take.
+	const char* short_opt = "hf:F:p:d:c:k:"; //Option flags the program can take.
 
 	const struct option long_opt[] = {
 		{ "div", 0, &factor_print_mode, 0},
@@ -60,6 +66,8 @@ int main(int argc, char* argv[]){
 		{ "factor", 1, NULL, 'F' },
 		{ "primes", 1, NULL, 'p' },
 		{ "derive", 1, NULL, 'd' },
+		{ "primality", 1, NULL, 'c' },
+		{ "iter", 1, NULL, 'k' },
 		{ NULL, 0, NULL, 0 }
 	};
 	while ((next_opt=getopt_long(argc,argv,short_opt,long_opt, NULL))!=-1){
@@ -90,6 +98,17 @@ int main(int argc, char* argv[]){
 				z = optarg;
 				task = derivation;
 				break;
+			case 'c': //Primality test
+				opt = optarg;
+				stringstream(opt) >> x;
+				y=7;
+				task = primality;
+				break;
+			case 'k': //Extra argument for primality test
+				opt = optarg;
+				stringstream(opt) >> y;
+				task = primality;
+				break;
 			case '?': //Oops, someone entered an invalid option
 				print_usage(1);
 				break;
@@ -117,6 +136,15 @@ int main(int argc, char* argv[]){
 	else if(task == derivation){					//
 		derive(z);						//
 		exit(0);						//
-	}								//
+	}
+	else if(task == primality){
+	    	if(primecheck_k(x,y)){
+			cout << "Probable prime with probability " << 1-pow(0.25,y) << endl;
+		}
+		else{
+		    cout << "Composite" << endl;
+		}
+		exit(0);
+	}
 	print_usage(0);//If we actually come this far, it means that something went wrong.
 }
