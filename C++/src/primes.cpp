@@ -59,10 +59,14 @@ template<typename T> void prime_sieve(vector<T>* prime_array, T limit){
 	    }
 	}
 }
-template<typename T> T mod_exp(T m, T e, T n){ //TODO: Convert to square-and-multiply algorithm
+template<typename T> T mod_exp(T m, T e, T n){ //Modular exponentiation with square-and-multiply
 	T z=1;
-	for(T i=0; i<e; i++){
-	    z=(z*m)%n;
+	while(e>0){
+	    if(e&1){
+	    	z=(z*m)%n;
+	    }
+	    m=(m*m)%n;
+	    e=e>>1;
 	}
 	return z;
 }
